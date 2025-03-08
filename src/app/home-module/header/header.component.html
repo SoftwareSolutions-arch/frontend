@@ -1,0 +1,52 @@
+<!-- Header -->
+<header class="sticky-top shadow-sm header-bg">
+  <div class="container py-2">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+
+      <!-- Left: Menu & Store Name -->
+      <div class="d-flex align-items-center left-section order-1">
+        <button class="btn btn-outline-light hover-scale me-2 me-lg-3" (click)="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="text-white fw-bold fs-4 brand-name">MyStore</div>
+      </div>
+      <!-- Right: Icons -->
+      <div class="d-flex align-items-center right-section order-2 order-lg-3">
+        <!-- Wishlist -->
+        <a routerLink="/wishlist" class="icon-link position-relative me-2 me-lg-3">
+          <i class="fas fa-heart fs-5"></i>
+        </a>
+        <!-- Added Menu Sidebar -->
+        <!-- Modified Menu Sidebar with Submenu Handling -->
+        <div class="menu-sidebar" [class.active]="isMenuOpen">
+          <div class="sidebar-header">
+            <h5 class="text-white mb-0">Shop by Category</h5>
+            <button class="btn btn-close btn-close-white" (click)="toggleMenu()"></button>
+          </div>
+
+          <div class="sidebar-body">
+            <ul class="nav flex-column">
+              <li class="nav-item" *ngFor="let category of categories" [class.active]="activeSubmenu === category.name">
+                <a class="nav-link d-flex align-items-center" (click)="toggleSubmenu(category.name)">
+                  <i [class]="category.icon + ' me-2'"></i>
+                  {{ category.name }}
+                  <i class="fas ms-auto" [ngClass]="{'fa-chevron-right': activeSubmenu !== category.name, 'fa-chevron-down': activeSubmenu === category.name}"></i> 
+                </a>                
+                <ul class="sub-menu" *ngIf="category.subcategories && activeSubmenu === category.name">
+                  <li *ngFor="let sub of category.subcategories">
+                    <a class="nav-link sub-item"  [routerLink]="['/category/2']" routerLinkActive="router-link-active" >
+                      {{ sub.name }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              
+              
+            </ul>
+          </div>
+          <div class="sidebar-backdrop" (click)="toggleMenu()"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

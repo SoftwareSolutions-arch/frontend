@@ -1,0 +1,21 @@
+<div class="menu-overlay" [class.active]="isOpen" >
+    <div class="menu-container" [class.active]="isOpen" (click)="$event.stopPropagation()">
+      <div class="menu-header">
+        <h4>Categories</h4>
+        <button class="btn btn-close" ></button>
+      </div>
+      <ul class="menu-list">
+        <li *ngFor="let category of categories" 
+            [class.has-submenu]="category.subcategories"
+            (mouseenter)="toggleSubmenu(category)"
+            (mouseleave)="closeSubmenu()">
+          <a href="#">{{ category.name }}</a>
+          <ul class="submenu" *ngIf="activeSubmenu === category.name">
+            <li *ngFor="let sub of category.subcategories">
+              <a href="#">{{ sub }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>    

@@ -1,0 +1,49 @@
+// category.component.scss
+.tech-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+  }
+  
+  .sticky-top {
+    top: 20px;
+  }
+  
+  .form-check-input {
+    &:checked {
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+  }
+  
+  .form-range {
+    &::-webkit-slider-thumb {
+      background: #0d6efd;
+    }
+    &::-moz-range-thumb {
+      background: #0d6efd;
+    }
+  }
+  
+  .rating {
+    i {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .card-img-top {
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .btn-outline-danger {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }

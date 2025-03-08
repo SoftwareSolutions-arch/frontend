@@ -1,0 +1,196 @@
+<!-- product.component.html -->
+<div class="container py-5 product-entry">
+
+  <button class="btn btn-outline-secondary mb-4" routerLink="/">
+    <i [routerLink]="['/home']" routerLinkActive="router-link-active"  class="fas fa-arrow-left me-2"></i>Back to Products
+  </button>
+  <div class="row g-5">
+    <!-- Image Carousel -->
+    <div class="col-lg-6">
+      <div class="image-carousel position-relative">
+        <div class="main-carousel">
+          <div class="carousel-inner">
+            <div *ngFor="let image of product.images; let i = index" 
+                 class="carousel-item" [class.active]="i === activeSlideIndex">
+              <img [src]="image" 
+                   class="d-block w-100 cursor-zoom" 
+                   alt="Product Image"
+                   (click)="openZoom(image)">
+            </div>
+          </div>
+        </div>
+        <div class="thumbnails d-flex gap-2 mt-3">
+          <img *ngFor="let thumb of product.images; let i = index" 
+               [src]="thumb" 
+               class="thumbnail-img" 
+               [class.active]="i === activeSlideIndex"
+               (click)="changeSlide(i)"
+               width="80">
+        </div>
+        <div class="zoom-preview" [style]="zoomStyle"></div>
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="col-lg-6">
+      <div class="product-details">
+        <div class="d-flex justify-content-between align-items-start">
+          <h1 class="display-5 fw-bold mb-3">{{ product.name }}</h1>
+          <button class="btn btn-link wishlist-btn" (click)="toggleWishlist()">
+            <i [class.far]="!isInWishlist" [class.fas]="isInWishlist" class="fa-heart fa-2x"></i>
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center mb-4">
+          <div class="rating">
+            <i *ngFor="let star of [1,2,3,4,5]" 
+               class="fas" 
+               [class.fa-star]="star <= product.rating" 
+               [class.text-warning]="star <= product.rating" 
+               [class.text-muted]="star > product.rating"></i>
+          </div>
+          <span class="ms-3 text-muted">({{ product.reviews.length }} Reviews)</span>
+        </div>
+
+        <div class="price-section mb-4">
+          <span class="display-4 fw-bold text-primary">{{ product.price | currency }}</span>
+          <del class="ms-3 text-muted fs-5">{{ product.originalPrice | currency }}</del>
+          <span class="badge bg-danger ms-3">{{ product.discount }}% OFF</span>
+        </div>
+
+        <p class="lead mb-4">{{ product.description }}</p>
+
+        <div class="specs mb-5">
+          <h5 class="mb-3">Key Features</h5>
+          <ul class="list-unstyled">
+            <li *ngFor="let feature of product.features" class="mb-2">
+              <i class="fas fa-check text-success me-2"></i>{{ feature }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="d-flex gap-3 align-items-center mb-4">
+          <div class="input-group quantity-selector" style="width: 150px;">
+            <button class="btn btn-outline-secondary" (click)="updateQuantity(-1)">−</button>
+            <input type="number" [(ngModel)]="quantity" 
+                   class="form-control text-center" min="1" max="10">
+            <button class="btn btn-outline-secondary" (click)="updateQuantity(1)">+</button>
+          </div>
+          <div class="d-flex flex-column gap-2 flex-grow-1">
+            <button class="btn btn-primary btn-lg add-to-cart-btn" (click)="addToCart()">
+              <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+            </button>
+            <button class="btn btn-success btn-lg" (click)="buyNow()">
+              <i class="fas fa-bolt me-2"></i>Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Similar Products -->
+  <section class="similar-products mt-5">
+    <h3 class="mb-4">Similar Products</h3>
+    <div class="row g-4">
+      <div *ngFor="let similarProduct of similarProducts" class="col-md-4">
+        <div class="card similar-product-card">
+          <img [src]="similarProduct.image" class="card-img-top" alt="Similar Product">
+          <div class="card-body">
+            <h5 class="card-title">{{ similarProduct.name }}</h5>
+            <p class="text-primary fw-bold">{{ similarProduct.price | currency }}</p>
+            <button class="btn btn-outline-primary w-100">Quick View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+
+
+
+
+
+
+  <section class="reviews mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3>Customer Reviews</h3>
+      <button class="btn btn-primary" (click)="showReviewForm = !showReviewForm">
+        Write Review
+      </button>
+    </div>
+
+    <!-- Add Review Form -->
+    <div class="card mb-4" *ngIf="showReviewForm">
+      <div class="card-body">
+        <form (ngSubmit)="submitReview()">
+          <div class="mb-3">
+            <label class="form-label">Rating</label>
+            <div class="rating-stars">
+              <i *ngFor="let star of [1,2,3,4,5]" 
+                 class="fas fa-star cursor-pointer" 
+                 [class.text-warning]="star <= newReview.rating" 
+                 [class.text-muted]="star > newReview.rating"
+                 (click)="newReview.rating = star"></i>
+            </div>
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" 
+                      [(ngModel)]="newReview.comment" 
+                      name="comment" 
+                      placeholder="Your review..."
+                      rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <input type="text" 
+                   class="form-control" 
+                   [(ngModel)]="newReview.author" 
+                   name="author" 
+                   placeholder="Your name">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Reviews List -->
+    <div class="reviews-list">
+      <div *ngFor="let review of product.reviews" class="review-card card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-2">
+            <h5 class="card-title">{{ review.author }}</h5>
+            <div class="rating">
+              <i *ngFor="let star of [1,2,3,4,5]" 
+                 class="fas" 
+                 [class.fa-star]="star <= review.rating" 
+                 [class.text-warning]="star <= review.rating" 
+                 [class.text-muted]="star > review.rating"></i>
+            </div>
+          </div>
+          <p class="text-muted small mb-2">{{ review.date | date }}</p>
+          <p class="mb-0">{{ review.comment }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="custom-modal" *ngIf="isZoomed">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeZoom()">&times;</span>
+      <img [src]="zoomedImage" class="img-fluid" alt="Zoomed Image">
+    </div>
+    <div class="modal-backdrop" (click)="closeZoom()"></div>
+  </div>
+</div>
+
+<!-- Compare Bar -->
+<div class="compare-bar bg-white p-3" [class.active]="showCompareBar">
+  <div class="container d-flex justify-content-between align-items-center">
+    <span>{{ comparedItems.length }} items selected for comparison</span>
+    <div>
+      <button class="btn btn-outline-danger me-2" (click)="clearComparison()">Clear All</button>
+      <button class="btn btn-primary" (click)="compareNow()">Compare Now</button>
+    </div>
+  </div>
+</div>

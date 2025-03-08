@@ -1,0 +1,108 @@
+<!-- category.component.html -->
+<div class="container-fluid py-5">
+    <div class="row">
+      <!-- Filters Sidebar -->
+      <div class="col-lg-3 col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 p-3 sticky-top">
+          <h4 class="mb-4 fw-bold">Filter By</h4>
+          
+          <!-- Company Filter -->
+          <div class="mb-4">
+            <h6 class="fw-bold mb-3">Brand</h6>
+            <div *ngFor="let brand of brands" class="form-check">
+              <input class="form-check-input" type="checkbox" 
+                     [id]="brand" [checked]="selectedBrands.includes(brand)"
+                     (change)="toggleBrand(brand)">
+              <label class="form-check-label" [for]="brand">{{brand}}</label>
+            </div>
+          </div>
+  
+          <!-- Price Filter -->
+          <div class="mb-4">
+            <h6 class="fw-bold mb-3">Price Range</h6>
+            <input type="range" class="form-range" min="0" max="5000" 
+                   [(ngModel)]="priceRange" (input)="applyFilters()">
+            <div class="d-flex justify-content-between">
+              <small>$0</small>
+              <small>${{priceRange}}</small>
+            </div>
+          </div>
+  
+          <!-- Rating Filter -->
+          <div class="mb-4">
+            <h6 class="fw-bold mb-3">Rating</h6>
+            <div *ngFor="let rating of [4,3,2,1]" class="mb-2">
+              <button class="btn btn-link p-0 text-decoration-none" 
+                      (click)="toggleRating(rating)">
+                <i *ngFor="let star of [1,2,3,4,5]" 
+                   class="fas fa-star" 
+                   [class.text-warning]="star <= rating" 
+                   [class.text-muted]="star > rating"></i>
+                <span class="ms-2">& Up</span>
+              </button>
+            </div>
+          </div>
+  
+          <!-- Latest Arrivals -->
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" 
+                     id="latest" [(ngModel)]="showLatest"
+                     (change)="applyFilters()">
+              <label class="form-check-label" for="latest">
+                Latest Arrivals
+              </label>
+            </div>
+          </div>
+  
+          <button class="btn btn-outline-danger w-100 mt-3" 
+                  (click)="clearFilters()">
+            Clear All Filters
+          </button>
+        </div>
+      </div>
+  
+      <!-- Products Grid -->
+      <div class="col-lg-9 col-md-8">
+        <div class="row g-4">
+          <div [routerLink]="['/product-details/2']" routerLinkActive="router-link-active"  *ngFor="let product of filteredProducts" class="col-xl-4 col-md-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden tech-card">
+              <!-- Product Image -->
+              <div class="position-relative">
+                <img [src]="product.image" class="card-img-top" [alt]="product.name">
+                <span *ngIf="product.isLatest" 
+                      class="badge bg-success position-absolute top-0 end-0 m-2">
+                  New
+                </span>
+              </div>
+  
+              <!-- Product Details -->
+              <div class="card-body">
+                <h5 class="card-title fw-bold">{{product.name}}</h5>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rating">
+                        <i *ngFor="let star of [1,2,3,4,5]" 
+                           class="fas" 
+                           [class.fa-star]="star <= product.rating" 
+                           [class.fa-star-half-alt]="product.rating % 1 !== 0 && star === Math.ceil(product.rating)"
+                           [class.text-warning]="star <= product.rating" 
+                           [class.text-muted]="star > product.rating"></i>
+                      </div>
+                  <small class="ms-2">({{product.reviews}} reviews)</small>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="text-success fw-bold h4">{{product.price | currency}}</span>
+                    <del class="text-muted ms-2">{{product.originalPrice | currency}}</del>
+                  </div>
+                  <button class="btn btn-primary rounded-circle p-2">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
