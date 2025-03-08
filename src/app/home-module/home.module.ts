@@ -8,7 +8,10 @@ import { HomeService } from './home.service';
 import { MenubarComponent } from './menubar/menubar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterStudentModalComponent } from './register-student-modal/register-student-modal.component';
-
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { AttendanceSheetComponent } from './attendance-sheet/attendance-sheet.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,15 @@ import { RegisterStudentModalComponent } from './register-student-modal/register
     HeaderComponent,
     FooterComponent,
     MenubarComponent,
-    RegisterStudentModalComponent
+    RegisterStudentModalComponent,
+    AttendanceSheetComponent
   ],
   imports: [
     CommonModule,
     HomeRoutes,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule,
   ],
   providers: [
     HomeService

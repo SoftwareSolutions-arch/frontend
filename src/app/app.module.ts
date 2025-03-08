@@ -11,7 +11,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 @NgModule({
   declarations: [
     AppComponent,
-      UnauthroizeComponent
+      UnauthroizeComponent,
    ],
   imports: [
     BrowserModule,

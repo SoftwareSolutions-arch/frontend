@@ -36,14 +36,14 @@
 
           <div class="menu-sidebar" [class.active]="isMenuOpen">
             <div class="sidebar-header">
-              <h5 class="text-white mb-0">Shop by Category</h5>
+              <h5 class="text-white mb-0">Attendance System</h5>
               <button class="btn btn-close btn-close-white" (click)="toggleMenu()"></button>
             </div>
 
             <div class="sidebar-body">
               <ul class="nav flex-column">
-                <li class="nav-item" *ngFor="let category of categories"
-                  [class.active]="activeSubmenu === category.name">
+                <li class="nav-item" *ngFor="let category of categories" [routerLink]="['/attendance-sheet']"
+                  routerLinkActive="router-link-active" [class.active]="activeSubmenu === category.name">
                   <a class="nav-link d-flex align-items-center" (click)="toggleSubmenu(category.name)">
                     <i [class]="category.icon + ' me-2'"></i>
                     {{ category.name }}
@@ -52,7 +52,8 @@
                   </a>
                   <ul class="sub-menu" *ngIf="category.subcategories && activeSubmenu === category.name">
                     <li *ngFor="let sub of category.subcategories">
-                      <a class="nav-link sub-item" [routerLink]="['/category/2']" routerLinkActive="router-link-active">
+                      <a class="nav-link sub-item" [routerLink]="['/attendance-sheet']"
+                        routerLinkActive="router-link-active">
                         {{ sub.name }}
                       </a>
                     </li>

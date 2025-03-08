@@ -1,4 +1,113 @@
 <app-header></app-header>
-
+<div class="container-fluid">
+    <!-- Header -->
+    <header class="my-4">
+      <h1 class="text-center">Student Attendance System</h1>
+    </header>
+  
+    <div class="row">
+      <!-- Calendar Section -->
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sidebar Section -->
+      <div class="col-md-4">
+        <!-- Filter Section -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">Filters</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Month</label>
+              <select class="form-select" [(ngModel)]="selectedMonth">
+                <option *ngFor="let month of months" [value]="month">{{month}}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Class</label>
+              <select class="form-select" [(ngModel)]="selectedClass">
+                <option *ngFor="let cls of classes" [value]="cls">{{cls}}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Student</label>
+              <select class="form-select" [(ngModel)]="selectedStudent">
+                <option *ngFor="let student of students" [value]="student.id">{{student.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Attendance Statistics -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Attendance Statistics</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div class="text-center">
+                <div class="text-bg-success p-3 rounded">
+                  <h4>{{presentCount}}</h4>
+                  <small>Present</small>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="text-bg-danger p-3 rounded">
+                  <h4>{{absentCount}}</h4>
+                  <small>Absent</small>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="text-bg-warning p-3 rounded">
+                  <h4>{{lateCount}}</h4>
+                  <small>Late</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mark Attendance Modal -->
+  <div class="modal fade" id="attendanceModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Mark Attendance - {{selectedDate | date}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let student of students" class="mb-3">
+            <label class="form-label">{{student.name}}</label>
+            <div class="btn-group" role="group">
+              <input type="radio" class="btn-check" name="{{student.id}}" 
+                     id="present{{student.id}}" autocomplete="off" value="present">
+              <label class="btn btn-outline-success" for="present{{student.id}}">Present</label>
+  
+              <input type="radio" class="btn-check" name="{{student.id}}" 
+                     id="absent{{student.id}}" autocomplete="off" value="absent">
+              <label class="btn btn-outline-danger" for="absent{{student.id}}">Absent</label>
+  
+              <input type="radio" class="btn-check" name="{{student.id}}" 
+                     id="late{{student.id}}" autocomplete="off" value="late">
+              <label class="btn btn-outline-warning" for="late{{student.id}}">Late</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <app-footer></app-footer>

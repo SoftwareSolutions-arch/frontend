@@ -17,12 +17,10 @@ export class HeaderComponent implements OnInit {
 
   categories = [
     {
-      name: 'Electronics',
+      name: 'Attandance-sheet',
       icon: 'fas fa-laptop',
       subcategories: [
-        { name: 'Laptops', link: '/electronics/laptops' },
-        { name: 'Smartphones', link: '/electronics/smartphones' },
-        { name: 'Accessories', link: '/electronics/accessories' }
+        { name: '', link: '/electronics/laptops' }
       ]
     },
   ];

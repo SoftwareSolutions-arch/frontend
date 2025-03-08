@@ -1,0 +1,93 @@
+<div class="content container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h4 class="page-title">Attendance Sheet</h4>
+    </div>
+  </div>
+  <div class="row filter-row align-items-center g-3">
+    <!-- Employee Name -->
+    <div class="col-md-3 col-sm-6">
+      <div class="form-group form-focus mb-0">
+        <label class="control-label">Employee Name</label>
+        <input type="text" class="form-control floating" 
+               [(ngModel)]="searchText" (input)="applyFilter()" />
+      </div>
+    </div>
+  
+    <!-- Month Select -->
+    <div class="col-md-3 col-sm-6">
+      <div class="form-group form-focus select-focus mb-0">
+        <label class="control-label">Select Month</label>
+        <select class="form-select floating" 
+                [(ngModel)]="selectedMonth" (change)="updateDays()">
+          <option *ngFor="let month of months" [value]="month.value">
+            {{month.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Year Select -->
+    <div class="col-md-3 col-sm-6">
+      <div class="form-group form-focus select-focus mb-0">
+        <label class="control-label">Select Year</label>
+        <select class="form-select floating" 
+                [(ngModel)]="selectedYear" (change)="updateDays()">
+          <option *ngFor="let year of years" [value]="year">{{year}}</option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Search Button -->
+   
+  </div> <div class="col-md-3 col-sm-6 d-flex align-items-end">
+    <button class="btn btn-success w-50 mt-3" (click)="applyFilter()">
+      Search
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="table-responsive">
+        <table class="table table-striped custom-table m-b-0">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th *ngFor="let day of days">{{day + 1}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of filteredRows">
+              <td>{{employee.name}}</td>
+              <td *ngFor="let day of days; let i = index">
+                <div [ngSwitch]="employee['day' + (i + 1)]">
+                  <div *ngSwitchCase="'on'">
+                    <i class="fa fa-check text-success"></i>
+                  </div>
+                  <div *ngSwitchCase="'off'">
+                    <i class="fa fa-close text-danger"></i>
+                  </div>
+                  <div *ngSwitchCase="'first-off'" class="half-day">
+                    <span class="first-off">
+                      <i class="fa fa-check text-success"></i>
+                    </span>
+                    <span class="first-off">
+                      <i class="fa fa-close text-danger"></i>
+                    </span>
+                  </div>
+                  <div *ngSwitchCase="'second-off'" class="half-day">
+                    <span class="first-off">
+                      <i class="fa fa-close text-danger"></i>
+                    </span>
+                    <span class="first-off">
+                      <i class="fa fa-check text-success"></i>
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
