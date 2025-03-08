@@ -1,52 +1,93 @@
-<!-- Header -->
-<header class="sticky-top shadow-sm header-bg">
-  <div class="container py-2">
-    <div class="d-flex flex-wrap align-items-center justify-content-between">
+<header class="app-header">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary">
+    <div class="container-fluid">
 
-      <!-- Left: Menu & Store Name -->
-      <div class="d-flex align-items-center left-section order-1">
-        <button class="btn btn-outline-light hover-scale me-2 me-lg-3" (click)="toggleMenu()">
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="text-white fw-bold fs-4 brand-name">MyStore</div>
-      </div>
-      <!-- Right: Icons -->
-      <div class="d-flex align-items-center right-section order-2 order-lg-3">
-        <!-- Wishlist -->
-        <a routerLink="/wishlist" class="icon-link position-relative me-2 me-lg-3">
-          <i class="fas fa-heart fs-5"></i>
-        </a>
-        <!-- Added Menu Sidebar -->
-        <!-- Modified Menu Sidebar with Submenu Handling -->
-        <div class="menu-sidebar" [class.active]="isMenuOpen">
-          <div class="sidebar-header">
-            <h5 class="text-white mb-0">Shop by Category</h5>
-            <button class="btn btn-close btn-close-white" (click)="toggleMenu()"></button>
+      <button class="btn btn-outline-light hover-scale me-2 me-lg-3" (click)="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <!-- Brand and Toggle -->
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-user-graduate me-2"></i>
+        EduAttend
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navigation Items -->
+      <div class="collapse navbar-collapse" id="headerNav">
+        <!-- Search Form -->
+        <form class="d-flex ms-lg-3 my-2 my-lg-0">
+          <div class="input-group">
+            <input type="search" class="form-control search-input" placeholder="Search students...">
+            <button class="btn btn-light" type="button">
+              <i class="fas fa-search"></i>
+            </button>
           </div>
+        </form>
 
-          <div class="sidebar-body">
-            <ul class="nav flex-column">
-              <li class="nav-item" *ngFor="let category of categories" [class.active]="activeSubmenu === category.name">
-                <a class="nav-link d-flex align-items-center" (click)="toggleSubmenu(category.name)">
-                  <i [class]="category.icon + ' me-2'"></i>
-                  {{ category.name }}
-                  <i class="fas ms-auto" [ngClass]="{'fa-chevron-right': activeSubmenu !== category.name, 'fa-chevron-down': activeSubmenu === category.name}"></i> 
-                </a>                
-                <ul class="sub-menu" *ngIf="category.subcategories && activeSubmenu === category.name">
-                  <li *ngFor="let sub of category.subcategories">
-                    <a class="nav-link sub-item"  [routerLink]="['/category/2']" routerLinkActive="router-link-active" >
-                      {{ sub.name }}
-                    </a>
-                  </li>
-                </ul>
+        <!-- Right Side Items -->
+        <div class="ms-auto d-flex align-items-center">
+          <!-- Register Button -->
+          <button class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#registerStudentModal">
+            <i class="fas fa-user-plus me-2"></i>Register Student
+          </button>
+
+
+          <div class="menu-sidebar" [class.active]="isMenuOpen">
+            <div class="sidebar-header">
+              <h5 class="text-white mb-0">Shop by Category</h5>
+              <button class="btn btn-close btn-close-white" (click)="toggleMenu()"></button>
+            </div>
+
+            <div class="sidebar-body">
+              <ul class="nav flex-column">
+                <li class="nav-item" *ngFor="let category of categories"
+                  [class.active]="activeSubmenu === category.name">
+                  <a class="nav-link d-flex align-items-center" (click)="toggleSubmenu(category.name)">
+                    <i [class]="category.icon + ' me-2'"></i>
+                    {{ category.name }}
+                    <i class="fas ms-auto"
+                      [ngClass]="{'fa-chevron-right': activeSubmenu !== category.name, 'fa-chevron-down': activeSubmenu === category.name}"></i>
+                  </a>
+                  <ul class="sub-menu" *ngIf="category.subcategories && activeSubmenu === category.name">
+                    <li *ngFor="let sub of category.subcategories">
+                      <a class="nav-link sub-item" [routerLink]="['/category/2']" routerLinkActive="router-link-active">
+                        {{ sub.name }}
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sidebar-footer">
+              <div class="text-center small text-white-50">EduAttend v2.0</div>
+            </div>
+            <div class="sidebar-backdrop" (click)="toggleMenu()"></div>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-profile" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle text-white"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">My Account</a></li>
+              <li><a class="dropdown-item" href="#">Orders</a></li>
+              <li>
+                <hr class="dropdown-divider">
               </li>
-              
-              
+              <li>
+                <button class="btn  me-6 dropdown-item" (click)="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+              </li>
             </ul>
           </div>
-          <div class="sidebar-backdrop" (click)="toggleMenu()"></div>
         </div>
       </div>
     </div>
-  </div>
+  </nav>
+
+  <!-- Register Student Modal Component -->
+  <app-register-student-modal></app-register-student-modal>
 </header>

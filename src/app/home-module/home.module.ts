@@ -6,9 +6,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeRoutes } from './home.routing';
 import { HomeService } from './home.service';
 import { MenubarComponent } from './menubar/menubar.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CategoryComponent } from './category/category.component';
+import { RegisterStudentModalComponent } from './register-student-modal/register-student-modal.component';
 
 
 @NgModule({
@@ -17,8 +16,7 @@ import { CategoryComponent } from './category/category.component';
     HeaderComponent,
     FooterComponent,
     MenubarComponent,
-    ProductDetailsComponent,
-    CategoryComponent
+    RegisterStudentModalComponent
   ],
   imports: [
     CommonModule,
